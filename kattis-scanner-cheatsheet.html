@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kattis Scanner Input</title>
+</head>
+<body>
+
+<h1>Kattis Input with Scanner</h1>
+
+<p>Every example goes inside this:</p>
+<pre>import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        // code goes here
+    }
+}</pre>
+
+<p>Important: nextInt() leaves the newline behind. If you want to use nextLine() right after nextInt(), call sc.nextLine(); once first to clear it.</p>
+
+<hr>
+
+<h2>1. Groups ending with 0</h2>
+<p>Input:</p>
+<pre>3
+Mozart
+Beethoven
+Bach
+5
+Hilbert
+Godel
+Poincare
+Ramanujan
+Pochhammmer
+0</pre>
+<p>How to read it:</p>
+<pre>int n = sc.nextInt();
+while (n != 0) {
+    sc.nextLine();
+    String result = "";
+    int i = 0;
+    while (i &lt; n) {
+        String name = sc.nextLine();
+        result += name + " ";
+        i++;
+    }
+    System.out.println(result.trim());
+    n = sc.nextInt();
+}</pre>
+<p>Output:</p>
+<pre>Mozart Beethoven Bach
+Hilbert Godel Poincare Ramanujan Pochhammmer</pre>
+
+<hr>
+
+<h2>2. Number of test cases first</h2>
+<p>Input:</p>
+<pre>3
+5 7
+10 20
+1 1</pre>
+<p>How to read it:</p>
+<pre>int t = sc.nextInt();
+while (t &gt; 0) {
+    int a = sc.nextInt();
+    int b = sc.nextInt();
+    System.out.println(a + b);
+    t--;
+}</pre>
+<p>Output:</p>
+<pre>12
+30
+2</pre>
+
+<hr>
+
+<h2>3. Numbers until end of file</h2>
+<p>Input:</p>
+<pre>4 9
+12 3
+100 200</pre>
+<p>How to read it:</p>
+<pre>while (sc.hasNextInt()) {
+    int a = sc.nextInt();
+    int b = sc.nextInt();
+    System.out.println(Math.abs(a - b));
+}</pre>
+<p>Output:</p>
+<pre>5
+9
+100</pre>
+
+<hr>
+
+<h2>4. Whole lines until end of file</h2>
+<p>Input:</p>
+<pre>the quick brown fox
+hello world
+kattis is fun</pre>
+<p>How to read it:</p>
+<pre>while (sc.hasNextLine()) {
+    String line = sc.nextLine();
+    String[] words = line.split(" ");
+    System.out.println(words.length);
+}</pre>
+<p>Output:</p>
+<pre>4
+2
+3</pre>
+
+<hr>
+
+<h2>5. N, then N numbers</h2>
+<p>Input:</p>
+<pre>5
+3 8 1 9 4</pre>
+<p>How to read it:</p>
+<pre>int n = sc.nextInt();
+int sum = 0;
+int i = 0;
+while (i &lt; n) {
+    sum += sc.nextInt();
+    i++;
+}
+System.out.println(sum);</pre>
+<p>Output:</p>
+<pre>25</pre>
+
+<hr>
+
+<h2>6. Different amount of numbers on each line</h2>
+<p>Input:</p>
+<pre>1 2 3
+4 5
+6 7 8 9</pre>
+<p>How to read it:</p>
+<pre>while (sc.hasNextLine()) {
+    String line = sc.nextLine().trim();
+    if (line.isEmpty()) continue;
+    String[] parts = line.split("\\s+");
+    int sum = 0;
+    int i = 0;
+    while (i &lt; parts.length) {
+        sum += Integer.parseInt(parts[i]);
+        i++;
+    }
+    System.out.println(sum);
+}</pre>
+<p>Output:</p>
+<pre>6
+9
+30</pre>
+
+<hr>
+
+<h2>7. Grid of characters</h2>
+<p>Input:</p>
+<pre>3 4
+#..#
+.##.
+#...</pre>
+<p>How to read it:</p>
+<pre>int rows = sc.nextInt();
+int cols = sc.nextInt();
+sc.nextLine();
+int count = 0;
+int r = 0;
+while (r &lt; rows) {
+    String row = sc.nextLine();
+    int c = 0;
+    while (c &lt; cols) {
+        if (row.charAt(c) == '#') count++;
+        c++;
+    }
+    r++;
+}
+System.out.println(count);</pre>
+<p>Output:</p>
+<pre>5</pre>
+
+<hr>
+
+<h2>8. Number then full lines with spaces</h2>
+<p>Input:</p>
+<pre>2
+John Smith
+Mary Jane Watson</pre>
+<p>How to read it:</p>
+<pre>int n = sc.nextInt();
+sc.nextLine();
+while (n &gt; 0) {
+    String fullName = sc.nextLine();
+    System.out.println("Hello, " + fullName);
+    n--;
+}</pre>
+<p>Output:</p>
+<pre>Hello, John Smith
+Hello, Mary Jane Watson</pre>
+
+<hr>
+
+<h2>9. Word sentinel (stop at END)</h2>
+<p>Input:</p>
+<pre>apple
+banana
+cherry
+END</pre>
+<p>How to read it:</p>
+<pre>String word = sc.nextLine();
+while (!word.equals("END")) {
+    System.out.println(word.toUpperCase());
+    word = sc.nextLine();
+}</pre>
+<p>Output:</p>
+<pre>APPLE
+BANANA
+CHERRY</pre>
+
+<hr>
+
+<h2>10. Two-number sentinel (stop at 0 0)</h2>
+<p>Input:</p>
+<pre>3 4
+10 2
+0 0</pre>
+<p>How to read it:</p>
+<pre>int a = sc.nextInt();
+int b = sc.nextInt();
+while (!(a == 0 &amp;&amp; b == 0)) {
+    System.out.println(a * b);
+    a = sc.nextInt();
+    b = sc.nextInt();
+}</pre>
+<p>Output:</p>
+<pre>12
+20</pre>
+
+<hr>
+
+<h2>11. Mixed types on one line</h2>
+<p>Input:</p>
+<pre>3
+Alice 20 3.5
+Bob 19 2.8
+Cara 22 3.9</pre>
+<p>How to read it:</p>
+<pre>int n = sc.nextInt();
+while (n &gt; 0) {
+    String name = sc.next();
+    int age = sc.nextInt();
+    double gpa = sc.nextDouble();
+    System.out.println(name + " is " + age + " with GPA " + gpa);
+    n--;
+}</pre>
+<p>Output:</p>
+<pre>Alice is 20 with GPA 3.5
+Bob is 19 with GPA 2.8
+Cara is 22 with GPA 3.9</pre>
+
+<hr>
+
+<h2>12. Big numbers</h2>
+<p>Input:</p>
+<pre>123456789012</pre>
+<p>How to read it:</p>
+<pre>long x = sc.nextLong();
+System.out.println(x * 2);</pre>
+<p>Output:</p>
+<pre>246913578024</pre>
+
+</body>
+</html>
